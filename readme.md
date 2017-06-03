@@ -2,7 +2,6 @@ Rocket
 ======
 
 [![Travis Build Status][travis-build-status-svg]][travis-build-status] 
-[![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status]
 
 > Rocket is a toy game written in Rust, using the Piston library. The code is thoroughly 
 commented in order to help people to follow it easily.
@@ -10,6 +9,9 @@ commented in order to help people to follow it easily.
 ## Screenshots
 
 ![Screenshot](screenshots/gameplay2.png)
+
+
+![Auto Play](screenshots/autoplay1.png)
 
 You can find more screenshots in the [screenshots] directory.
 
@@ -26,7 +28,7 @@ Keyboard                | Action
 <kbd>&leftarrow;</kbd>  | Rotate left
 <kbd>&rightarrow;</kbd> | Rotate right
 <kbd>Space</kbd>        | Shoot
-
+<kbd>LCtrl</kbd>        | Auto-Mode 
 ## Requirements
 
 Rocket targets the latest stable version of Rust.
@@ -52,8 +54,8 @@ for people learning the language.
 MIT
 
 <!-- Badges -->
-[travis-build-status]: https://travis-ci.org/aochagavia/rocket
-[travis-build-status-svg]: https://travis-ci.org/aochagavia/rocket.svg
+[travis-build-status]: https://travis-ci.org/baishuai/rocket
+[travis-build-status-svg]: https://travis-ci.org/baishuai/rocket.svg
 
-[appveyor-build-status]: https://ci.appveyor.com/project/aochagavia/rocket
-[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/its182aar6vol45b?svg=true
+<!--[appveyor-build-status]: https://ci.appveyor.com/project/aochagavia/rocket
+[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/its182aar6vol45b?svg=true-->
