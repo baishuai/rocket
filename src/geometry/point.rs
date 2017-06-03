@@ -6,7 +6,7 @@ use super::Size;
 #[derive(Clone, Default)]
 pub struct Point {
     pub x: f64,
-    pub y: f64
+    pub y: f64,
 }
 
 impl Point {
@@ -19,14 +19,13 @@ impl Point {
     pub fn random<R: Rng>(rng: &mut R, bounds: Size) -> Point {
         Point {
             x: rng.gen_range(0.0, bounds.width),
-            y: rng.gen_range(0.0, bounds.height)
+            y: rng.gen_range(0.0, bounds.height),
         }
     }
 
     /// Returns the squared distance from this point to the given one
     pub fn squared_distance_to(&self, target: &Point) -> f64 {
-        (self.x - target.x) * (self.x - target.x)
-            + (self.y - target.y) * (self.y - target.y)
+        (self.x - target.x) * (self.x - target.x) + (self.y - target.y) * (self.y - target.y)
     }
 
     /// Rotates the point through the origin in the given angle (radians)

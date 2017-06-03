@@ -20,11 +20,11 @@ pub fn render_game(c: Context, g: &mut GlGraphics, res: &mut Resources, state: &
 
     // Render the score
     piston_window::text(color::ORANGE,
-            22,
-            &format!("Score: {}", state.score),
-            &mut res.font,
-            c.trans(10.0, 20.0).transform,
-            g);
+                        22,
+                        &format!("Score: {}", state.score),
+                        &mut res.font,
+                        c.trans(10.0, 20.0).transform,
+                        g);
 }
 
 /// Renders the world and everything in it
@@ -44,8 +44,7 @@ pub fn render_world(world: &World, c: Context, g: &mut GlGraphics) {
     render_player(&world.player, &c, g);
 }
 
-fn ellipse(color: Color, rectangle: [f64; 4], transform: Matrix2d, graphics: &mut GlGraphics)
-{
+fn ellipse(color: Color, rectangle: [f64; 4], transform: Matrix2d, graphics: &mut GlGraphics) {
     // There's piston_window::ellipse, but it uses a resolution of 128
     // which is unnecessarily high. Using 16 is much quicker to draw,
     // without looking any different.
@@ -53,39 +52,35 @@ fn ellipse(color: Color, rectangle: [f64; 4], transform: Matrix2d, graphics: &mu
             color: color,
             border: None,
             resolution: 16,
-    }.draw(
-        rectangle,
-        &Default::default(),
-        transform,
-        graphics);
+        }
+        .draw(rectangle, &Default::default(), transform, graphics);
 }
 
 /// Renders a particle
 pub fn render_particle(particle: &Particle, c: &Context, gl: &mut GlGraphics) {
     let radius = 5.0 * particle.ttl;
-    ellipse(
-        color::VIOLET,
-        [0.0, 0.0, radius * 2.0, radius * 2.0],
-        c.trans(particle.x() - radius, particle.y() - radius).transform,
-        gl);
+    ellipse(color::VIOLET,
+            [0.0, 0.0, radius * 2.0, radius * 2.0],
+            c.trans(particle.x() - radius, particle.y() - radius)
+                .transform,
+            gl);
 }
 
 /// Renders a bullet
 pub fn render_bullet(bullet: &Bullet, c: &Context, gl: &mut GlGraphics) {
-    ellipse(
-        color::BLUE,
-        [0.0, 0.0, bullet.diameter(), bullet.diameter()],
-        c.trans(bullet.x() - bullet.radius(), bullet.y() - bullet.radius()).transform,
-        gl);
+    ellipse(color::BLUE,
+            [0.0, 0.0, bullet.diameter(), bullet.diameter()],
+            c.trans(bullet.x() - bullet.radius(), bullet.y() - bullet.radius())
+                .transform,
+            gl);
 }
 
 /// Renders an enemy
 pub fn render_enemy(enemy: &Enemy, c: &Context, gl: &mut GlGraphics) {
-    ellipse(
-        color::YELLOW,
-        [0.0, 0.0, 20.0, 20.0],
-        c.trans(enemy.x() - 10.0, enemy.y() - 10.0).transform,
-        gl);
+    ellipse(color::YELLOW,
+            [0.0, 0.0, 20.0, 20.0],
+            c.trans(enemy.x() - 10.0, enemy.y() - 10.0).transform,
+            gl);
 }
 
 /// Render the player

@@ -1,6 +1,6 @@
 #![deny(missing_docs)]
-#![cfg_attr(feature="clippy", feature(plugin))]
-#![cfg_attr(feature="clippy", plugin(clippy))]
+#![cfg_attr(feature = "clippy", feature(plugin))]
+#![cfg_attr(feature = "clippy", plugin(clippy))]
 
 //! A 2D toy game written in Rust, using the Piston library.
 
@@ -31,9 +31,13 @@ fn main() {
 
     let game_size = Size::new(1024.0, 600.0);
 
-    let mut window: PistonWindow = WindowSettings::new(
-        "Rocket!", [game_size.width as u32, game_size.height as u32])
-        .opengl(opengl).samples(8).exit_on_esc(true).build().unwrap();
+    let mut window: PistonWindow =
+        WindowSettings::new("Rocket!", [game_size.width as u32, game_size.height as u32])
+            .opengl(opengl)
+            .samples(8)
+            .exit_on_esc(true)
+            .build()
+            .unwrap();
 
     window.set_ups(60);
     window.set_max_fps(60);
@@ -69,12 +73,14 @@ fn main() {
             }
 
             Input::Update(args) => {
+                input_controller.update(args.dt);
                 time_controller.update_seconds(args.dt, input_controller.actions(), &mut state);
                 CollisionsController::handle_collisions(&mut state);
             }
 
             Input::Render(args) => {
-                gl.draw(args.viewport(), |c, g| view::render_game(c, g, &mut resources, &state));
+                gl.draw(args.viewport(),
+                        |c, g| view::render_game(c, g, &mut resources, &state));
             }
 
             _ => {}

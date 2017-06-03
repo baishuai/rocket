@@ -5,7 +5,7 @@ use geometry::{Advance, Collide};
 ///
 /// When an enemy is reached by a bullet, it will explode
 pub struct Bullet {
-    vector: Vector
+    vector: Vector,
 }
 
 derive_position_direction!(Bullet);
@@ -23,5 +23,7 @@ impl Bullet {
 }
 
 impl Collide for Bullet {
-    fn radius(&self) -> f64 { 3.0 }
+    fn radius(&self) -> f64 {
+        3.0
+    }
 }

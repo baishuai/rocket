@@ -1,8 +1,31 @@
 use piston_window::{ControllerButton, ControllerAxisArgs, Key};
+use super::time;
+use std::f64;
 
 #[derive(Default)]
 pub struct InputController {
-    actions: Actions
+    actions: Actions,
+    auto_mode: bool,
+    auto_actions: AutoAction,
+}
+
+struct AutoAction {
+    time: f64,
+    rotate_time: f64,
+    actions: Actions,
+}
+
+impl Default for AutoAction {
+    fn default() -> Self {
+        AutoAction {
+            time: 0.0,
+            rotate_time: time::ROTATE_SPEED / 2.0 / f64::consts::PI * 0.25,
+            actions: Actions {
+                shoot: true,
+                ..Actions::default()
+            },
+        }
+    }
 }
 
 /// Active actions (toggled by user input)
@@ -11,7 +34,7 @@ pub struct Actions {
     pub rotate_left: bool,
     pub rotate_right: bool,
     pub boost: bool,
-    pub shoot: bool
+    pub shoot: bool,
 }
 
 impl InputController {
@@ -22,7 +45,27 @@ impl InputController {
 
     /// Returns a shared reference to the underlying actions
     pub fn actions(&self) -> &Actions {
-        &self.actions
+        if self.auto_mode {
+            &self.auto_actions.actions
+        } else {
+            &self.actions
+        }
+    }
+
+    /// Update ai_action according delta time
+    pub fn update(&mut self, dt: f64) {
+        if self.auto_mode {
+            //            self.ai_actions.boost = true;
+            self.auto_actions.time += dt;
+
+            if ((self.auto_actions.time / self.auto_actions.rotate_time) as i64) % 2 == 1 {
+                self.auto_actions.actions.rotate_left = true;
+                self.auto_actions.actions.rotate_right = false;
+            } else {
+                self.auto_actions.actions.rotate_left = false;
+                self.auto_actions.actions.rotate_right = true;
+            }
+        }
     }
 
     /// Processes a key press
@@ -37,12 +80,16 @@ impl InputController {
 
     /// Handles a key press or release
     fn handle_key(&mut self, key: Key, pressed: bool) {
+        self.auto_mode = if key == Key::LCtrl { true } else { false };
+        if self.auto_mode {
+            return
+        }
         match key {
             Key::Left => self.actions.rotate_left = pressed,
             Key::Right => self.actions.rotate_right = pressed,
             Key::Up => self.actions.boost = pressed,
             Key::Space => self.actions.shoot = pressed,
-            _ => ()
+            _ => (),
         }
     }
 
@@ -72,15 +119,15 @@ impl InputController {
                 -1.0 ... -0.2 => {
                     self.actions.rotate_left = true;
                     self.actions.rotate_right = false;
-                },
+                }
                 0.2 ... 1.0 => {
                     self.actions.rotate_left = false;
                     self.actions.rotate_right = true;
-                },
+                }
                 -0.199 ... 0.199 => {
                     self.actions.rotate_left = false;
                     self.actions.rotate_right = false;
-                },
+                }
                 _ => {}
             }
         }
@@ -90,10 +137,10 @@ impl InputController {
             match controller.position {
                 -0.8 ... 1.0 => {
                     self.actions.boost = true;
-                },
+                }
                 -1.0 ... -0.799 => {
                     self.actions.boost = false;
-                },
+                }
                 _ => {}
             }
         }

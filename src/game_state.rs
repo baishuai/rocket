@@ -8,7 +8,7 @@ pub struct GameState {
     /// The world contains everything that needs to be drawn
     pub world: World,
     /// The current score of the player
-    pub score: u32
+    pub score: u32,
 }
 
 impl GameState {
@@ -17,7 +17,7 @@ impl GameState {
         let mut rng = rand::thread_rng();
         GameState {
             world: World::new(&mut rng, size),
-            score: 0
+            score: 0,
         }
     }
 

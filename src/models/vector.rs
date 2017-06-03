@@ -10,13 +10,16 @@ pub struct Vector {
     /// The position of the vector
     pub position: Point,
     /// The direction angle, in radians
-    pub direction: f64
+    pub direction: f64,
 }
 
 impl Vector {
     /// Returns a new `Vector`
     pub fn new(position: Point, direction: f64) -> Vector {
-        Vector { position: position, direction: direction }
+        Vector {
+            position: position,
+            direction: direction,
+        }
     }
 
     /// Returns a random `Vector` within the given bounds

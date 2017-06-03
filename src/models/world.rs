@@ -9,7 +9,7 @@ pub struct World {
     pub particles: Vec<Particle>,
     pub bullets: Vec<Bullet>,
     pub enemies: Vec<Enemy>,
-    pub size: Size
+    pub size: Size,
 }
 
 impl World {
@@ -20,7 +20,7 @@ impl World {
             particles: Vec::with_capacity(1000),
             bullets: vec![],
             enemies: vec![],
-            size: size
+            size: size,
         }
     }
 }

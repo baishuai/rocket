@@ -30,14 +30,16 @@ impl CollisionsController {
             util::fast_retain(bullets, |bullet| {
                 // Remove the first enemy that collides with a bullet (if any)
                 // Add an explosion on its place
-                if let Some((index, position)) = enemies.iter().enumerate()
-                    .find(|&(_, enemy)| enemy.collides_with(bullet))
-                    .map(|(index, enemy)| (index, enemy.position()))
-                    {
-                        util::make_explosion(particles, &position, 10);
-                        enemies.remove(index);
-                        false
-                    } else {
+                if let Some((index, position)) =
+                    enemies
+                        .iter()
+                        .enumerate()
+                        .find(|&(_, enemy)| enemy.collides_with(bullet))
+                        .map(|(index, enemy)| (index, enemy.position())) {
+                    util::make_explosion(particles, &position, 10);
+                    enemies.remove(index);
+                    false
+                } else {
                     true
                 }
             });
@@ -49,7 +51,11 @@ impl CollisionsController {
 
     /// Handles collisions between the player and the enemies
     fn handle_player_collisions(state: &mut GameState) {
-        if state.world.enemies.iter().any(|enemy| state.world.player.collides_with(enemy)) {
+        if state
+               .world
+               .enemies
+               .iter()
+               .any(|enemy| state.world.player.collides_with(enemy)) {
             // Make an explosion where the player was
             let ppos = state.world.player.position();
             util::make_explosion(&mut state.world.particles, &ppos, 8);

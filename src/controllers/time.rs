@@ -23,7 +23,7 @@ const TRAIL_PARTICLE_RATE: f64 = 1.0 / TRAIL_PARTICLES_PER_SECOND;
 const ADVANCE_SPEED: f64 = 200.0;
 const BULLET_SPEED: f64 = 500.0;
 const ENEMY_SPEED: f64 = 100.0;
-const ROTATE_SPEED: f64 = 2.0 * f64::consts::PI;
+pub const ROTATE_SPEED: f64 = 2.0 * f64::consts::PI;
 
 /// Timers to handle creation of bullets, enemies and particles
 pub struct TimeController {
@@ -32,7 +32,7 @@ pub struct TimeController {
     current_time: f64,
     last_tail_particle: f64,
     last_shoot: f64,
-    last_spawned_enemy: f64
+    last_spawned_enemy: f64,
 }
 
 impl TimeController {
@@ -42,7 +42,7 @@ impl TimeController {
             current_time: 0.0,
             last_tail_particle: 0.0,
             last_shoot: 0.0,
-            last_spawned_enemy: 0.0
+            last_spawned_enemy: 0.0,
         }
     }
 
@@ -61,8 +61,15 @@ impl TimeController {
         };
 
         // Set speed and advance the player with wrap around
-        let speed = if actions.boost { 2.0 * ADVANCE_SPEED } else { ADVANCE_SPEED };
-        state.world.player.advance_wrapping(dt * speed, state.world.size);
+        let speed = if actions.boost {
+            2.0 * ADVANCE_SPEED
+        } else {
+            ADVANCE_SPEED
+        };
+        state
+            .world
+            .player
+            .advance_wrapping(dt * speed, state.world.size);
 
         // Update particles
         for particle in &mut state.world.particles {
@@ -75,15 +82,20 @@ impl TimeController {
         // Add new particles at the player's position, to leave a trail
         if self.current_time - self.last_tail_particle > TRAIL_PARTICLE_RATE {
             self.last_tail_particle = self.current_time;
-            state.world.particles.push(Particle::new(state.world.player.vector.clone().invert(),
-                                                    0.5));
+            state
+                .world
+                .particles
+                .push(Particle::new(state.world.player.vector.clone().invert(), 0.5));
         }
 
         // Add bullets
         if actions.shoot && self.current_time - self.last_shoot > BULLET_RATE {
             self.last_shoot = self.current_time;
-            state.world.bullets.push(Bullet::new(Vector::new(state.world.player.front(),
-                                                            state.world.player.direction())));
+            state
+                .world
+                .bullets
+                .push(Bullet::new(Vector::new(state.world.player.front(),
+                                              state.world.player.direction())));
         }
 
         // Advance bullets
