@@ -10,14 +10,19 @@ commented in order to help people to follow it easily.
 
 ![Screenshot](screenshots/gameplay2.png)
 
+### Auto Play mode
+use <kbd>Left Ctrl</kbd> to enter auto play mode,  
+any other key will leave auto play mode.
 
-![Auto Play](screenshots/autoplay1.png)
+![Auto Play](screenshots/recket_autoplay.gif)
 
 You can find more screenshots in the [screenshots] directory.
 
 [screenshots]: screenshots/
 
 ## How to play
+
+ 
 
 As you can see in the screenshots below, you are the red rocket and have to save the world from 
 the yellow invaders. To do so, you can use the following controls:
